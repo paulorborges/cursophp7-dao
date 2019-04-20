@@ -40,4 +40,11 @@
 	$usuario2->loadById(11);
 	$usuario2->update("teste34","senhaProfessor");
 	echo $usuario2;
+
+	//Deletar usuário
+	echo "<br><br>";
+	$usuario3 = new Usuario();
+	$usuario3->loadById(11);
+	$usuario3->delete();
+	echo $usuario3;
 ?>

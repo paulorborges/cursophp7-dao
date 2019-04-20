@@ -110,6 +110,17 @@
 			));
 		}
 
+		public function delete(){
+			$sql = new Sql();
+			$sql->query("DELETE FROM tb_usuarios WHERE idusuario = :ID", array(
+				':ID'=>$this->getIdusuario()
+			));
+			$this->setIdusuario(0);
+			$this->setDeslogin("");
+			$this->setDessenha("");
+			$this->setDtcadastro(new DateTime());
+		}
+
 		//No metodo construtor, quando se coloca a variável = "", significa que, caso algum metodo de outra classe chame o construtor e não passe os parametros de usuário e senha, o sistema não dará erro como se as informações fossem obrigatórias. Dessa forma, o código utiliza a mesma classe para ambas as funcionalidades. */
 		public function __construct($login = "",$password = ""){
 			$this->setDeslogin($login);
