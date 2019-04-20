@@ -44,6 +44,38 @@
 				$this->setDtcadastro(new DateTime($row['dtcadastro']));
 			}
 		}
+
+		/*como não se usa a palavra this no método getList, ele pode ser static e portanto não é necessário instanciar o objeto na chamada do método. Quando existe o this dentro do método isso significa que existe atribuição de valores ou chamada de outros métodos, ou seja, essa classe fica mais complexa*/
+		public static function getList(){
+			$sql = new Sql();
+			return $sql->select ("SELECT * FROM tb_usuarios ORDER BY deslogin;");
+		}
+
+		public static function search($login){
+			$sql = new Sql();
+			return $sql->select ("SELECT * FROM tb_usuarios WHERE deslogin LIKE :SEARCH ORDER BY deslogin;",array(
+				':SEARCH'=>"%" . $login . "%"
+			));
+		}
+
+		public function login($login,$password){
+			$sql = new Sql();
+			$results = $sql->select("SELECT * FROM tb_usuarios WHERE deslogin = :LOGIN AND dessenha = :PASSWORD", array(
+				":LOGIN"=>$login,
+				":PASSWORD"=>$password
+			));
+			if (count ($results) > 0){
+				$row = $results[0];
+				$this->setIdusuario($row['idusuario']);
+				$this->setDeslogin($row['deslogin']);
+				$this->setDessenha($row['dessenha']);
+				$this->setDtcadastro(new DateTime($row['dtcadastro']));
+			} else {
+				throw new Exception("Login e/ou senha inválidos.");
+			}
+
+		}
+
 		public function __toString(){
 			return json_encode(array(
 				"idusuario"=>$this->getIdusuario(),
