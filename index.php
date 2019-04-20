@@ -27,4 +27,17 @@
 	$usuario = new Usuario();
 	$usuario->login("teste2","teste2");
 	echo $usuario;
+
+	//Inserir novo usuário passando parametros via construtor
+	echo "<br><br>";
+	$aluno = new Usuario("coborges","123456");
+	$aluno->insert();
+	echo $aluno;
+
+	//Alteração de informações por código de usuário
+	echo "<br><br>";
+	$usuario2 = new Usuario();
+	$usuario2->loadById(11);
+	$usuario2->update("teste34","senhaProfessor");
+	echo $usuario2;
 ?>
